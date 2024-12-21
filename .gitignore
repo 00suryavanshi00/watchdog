@@ -1,1 +1,3 @@
 watchdogenv
+**/__pycache__/
+.env
