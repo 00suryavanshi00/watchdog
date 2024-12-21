@@ -2,10 +2,9 @@ from fastapi import APIRouter, HTTPException
 from ..tasks import analyze_pr
 import logging, hashlib
 from app.models import AnalyzePRRequest, TaskStatusResponse
-from app.config import redis_client
+from app.config import redis_client, settings
 
 
-# TODO: add more of logging
 logger = logging.getLogger("pr_analysis")
 
 router = APIRouter()
@@ -27,11 +26,12 @@ async def analyze_pull_request(request: AnalyzePRRequest):
             logger.info(f"Cache hit for task {cache_key} with status {cached_status}")
             return TaskStatusResponse(task_id=cached_task_id, status=f"Cached!")
 
-
+        # pick up from env if empty string is provided 
+        token_to_use = settings.GITHUB_TOKEN if request.github_token=="" else request.github_token
         task = analyze_pr.delay(
             request.repo_url,
             request.pr_number,
-            request.github_token,
+            token_to_use,
             request.analysis_types
         )
 

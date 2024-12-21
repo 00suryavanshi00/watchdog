@@ -26,7 +26,8 @@ logger = logging.getLogger("pr_analysis")
 @celery_app.task
 def analyze_pr(repo_url: str, pr_number: int, github_token: str, analysis_types: List[str]) -> dict:
     try:
-        github_service = GitHubService(settings.GITHUB_TOKEN)
+        # token_to_use = github_token or settings.GITHUB_TOKEN # env token as fallback
+        github_service = GitHubService(github_token)
         ai_analyzer = AiAnalyzer(
             model_name="command-r-plus",
             api_key=settings.COHERE_API_KEY
