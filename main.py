@@ -1,11 +1,13 @@
 from fastapi import FastAPI
 # from app.routers import example
-from app.routes import pr_analysis, results
+from app.routes import pr_analysis, results, github_webhook
 app = FastAPI()
 
 # Include routers
 app.include_router(pr_analysis.router)
 app.include_router(results.router)
+app.include_router(github_webhook.router)
+
 
 @app.get("/")
 def read_root():
