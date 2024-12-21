@@ -54,11 +54,13 @@ to access local doc api playground for yourself and for the deployed one it's me
     - Efficient and scalable storage for analysis results.
 7. **Environment Variables**:
     - Sensitive data like tokens and credentials are securely loaded using `os.getenv`.
-8. **Webhook Support**:
+8. **Ai Model**:
+    - Cohere is being used because I'm out of openai credits :) 
+9. **Webhook Support**:
     - WatchDog also has a webhook api for only pr events which is tested and can be directly added to the repo with the link and secret. Here's an example use case with my personal repo.
     
     ![Car Image](https://storage.googleapis.com/ecoroots_assets_bucket/github/WhatsApp%20Image%202024-12-21%20at%2016.07.36.jpeg)
-9. **Rate Limiting**:
+10. **Rate Limiting**:
     - WatchDog is also ratelimited by nginx on number of requests per second from a specific IP address. Below is the snippet from nginx config.
     
     ```bash
@@ -78,7 +80,7 @@ to access local doc api playground for yourself and for the deployed one it's me
     }
 }
     ```
-10. ***Caching***:
+11. ***Caching***:
     - WatchDog also caches the requests if everything in the payload is exactly same. It doesn't create a new celery task id for it.
 
 
